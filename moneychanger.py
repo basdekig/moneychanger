@@ -4,9 +4,20 @@ import os
 from dotenv import load_dotenv
 import requests
 import json
+import streamlit as st
 
 load_dotenv()
 EXCHANGERATE_API_KEY = os.getenv('EXCHANGERATE_API_KEY')
+
+st.title("Multilingual Money Changer")
+
+# A single text input box
+user_text = st.text_input("Enter the amount and the currency:")
+
+# Submit button
+if st.button("Submit"):
+    # Print the user input below the textbox
+    st.write("You entered:", user_text)
 
 def get_exchange_rate(base: str, target: str, amount: str) -> Tuple:
     """Return a tuple of (base, target, amount, conversion_result (2 decimal places))"""
@@ -14,9 +25,9 @@ def get_exchange_rate(base: str, target: str, amount: str) -> Tuple:
     print(requests.get(url).text)
     response= json.loads(requests.get(url).text)
     """return(base, target, amount, EXCHANGERATE_API_KEY)"""
-    return(base, target, amount, f'{response["conversion_result"]:.2f}')
+    return({base}, {target}, {amount}, f'{response["conversion_result"]:.2f}')
 
-print(get_exchange_rate("USD","EUR","350")) 
+print(get_exchange_rate("USD","EUR","100")) 
 
 def call_llm(textbox_input) -> Dict:
     """Make a call to the LLM with the textbox_input as the prompt.
