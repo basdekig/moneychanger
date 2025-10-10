@@ -19,15 +19,15 @@ client = OpenAI(
 load_dotenv()
 EXCHANGERATE_API_KEY = os.getenv('EXCHANGERATE_API_KEY')
 
-st.title("Multilingual Money Changer")
+#st.title("Multilingual Money Changer")
 
 # A single text input box
-user_text = st.text_input("Enter the amount and the currency:")
+#user_text = st.text_input("Enter the amount and the currency:")
 
 # Submit button
-if st.button("Submit"):
-    # Print the user input below the textbox
-    st.write("You entered:", user_text)
+#if st.button("Submit"):
+#    # Print the user input below the textbox
+#    st.write(call_llm, (user_input))
 
 def get_exchange_rate(base: str, target: str, amount: str) -> Tuple:
     """Return a tuple of (base, target, amount, conversion_result (2 decimal places))"""
@@ -52,7 +52,7 @@ def call_llm(textbox_input) -> Dict:
                 },
                 {
                     "role": "user",
-                    "content": "What is the capital of France?",
+                    "content": textbox_input,
                 }
             ],
             temperature=1.0,
@@ -60,11 +60,11 @@ def call_llm(textbox_input) -> Dict:
             max_tokens=1000,
             model=model_name
         )
-        print(response.choices[0].message.content)
+    #print(response.choices[0].message.content)
     except Exception as e:
           print(f"Exception {e} for {text}")
     else:
-        return response#.choices[0].message.content   
+        return response.choices[0].message.content   
     
 
 def run_pipeline():
@@ -80,3 +80,13 @@ def run_pipeline():
         st.write(f"(Function calling not used) and response from the model")
     else:
         st.write("NotImplemented")
+
+st.title("Multilingual Money Changer")
+
+# A single text input box
+user_text = st.text_input("Enter the amount and the currency:")
+
+# Submit button
+if st.button("Submit"):
+    # Print the user input below the textbox
+    st.write(call_llm, (user_input))        
