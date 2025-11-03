@@ -9,6 +9,7 @@ import os
 from openai import OpenAI
 from langsmith import wrappers, traceable
 
+load_dotenv()
 token = os.environ["GITHUB_TOKEN"]
 endpoint = "https://models.inference.ai.azure.com"
 model_name = "gpt-4o-mini"
@@ -18,7 +19,7 @@ client = OpenAI(
     api_key=token,
 )
 
-load_dotenv()
+# load_dotenv()
 EXCHANGERATE_API_KEY = os.getenv('EXCHANGERATE_API_KEY')
 
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
